@@ -1,6 +1,9 @@
 Pyramid multi-authentication
 ============================
 
+.. image:: https://travis-ci.org/wichert/pyramid_multiauth.png?branch=master
+    :target: https://travis-ci.org/wichert/pyramid_multiauth
+
 The `pyramid_multiauth` package makes it possible to use multiple authentication
 policy in a `pyramid <http://www.pylonsproject.org>`_ project. This can be useful
 in several scenarios:
