@@ -81,14 +81,18 @@ class MultiAuthenticationPolicyTests(unittest.TestCase):
         import mock
         policy = self.MultiAuthenticationPolicy()
         sub_policy = mock.Mock()
+        sub_policy.remember.return_value = ['headers']
         policy.add_policy('sub', sub_policy)
-        policy.remember('request', 'principal', extra='option')
+        self.assertEqual(
+                policy.remember('request', 'principal', extra='option'),
+                ['headers'])
         sub_policy.remember.assert_called_once_with('request', 'principal', extra='option')
 
     def test_remember_policy_filter(self):
         import mock
         policy = self.MultiAuthenticationPolicy()
         sub_policy = mock.Mock()
+        sub_policy.remember.return_value = []
         policy.add_policy('sub', sub_policy)
         policy.remember('request', 'principal', policies=[])
         self.assertTrue(not sub_policy.remember.called)
@@ -103,14 +107,16 @@ class MultiAuthenticationPolicyTests(unittest.TestCase):
         import mock
         policy = self.MultiAuthenticationPolicy()
         sub_policy = mock.Mock()
+        sub_policy.forget.return_value = ['headers']
         policy.add_policy('sub', sub_policy)
-        policy.forget('request')
+        self.assertEqual(policy.forget('request'), ['headers'])
         sub_policy.forget.assert_called_once_with('request')
 
     def test_forget_policy_filter(self):
         import mock
         policy = self.MultiAuthenticationPolicy()
         sub_policy = mock.Mock()
+        sub_policy.forget.return_value = []
         policy.add_policy('sub', sub_policy)
         policy.forget('request', policies=[])
         self.assertTrue(not sub_policy.forget.called)

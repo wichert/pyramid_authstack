@@ -32,11 +32,15 @@ class MultiAuthenticationPolicy(CallbackAuthenticationPolicy):
         return list(principals)
 
     def remember(self, request, principal, policies=None, **kw):
+        headers = []
         for (name, policy) in self.policies.items():
             if policies is None or name in policies:
-                policy.remember(request, principal, **kw)
+                headers.extend(policy.remember(request, principal, **kw))
+        return headers
 
     def forget(self, request, policies=None):
+        headers = []
         for (name, policy) in self.policies.items():
             if policies is None or name in policies:
-                policy.forget(request)
+                headers.extend(policy.forget(request))
+        return headers
