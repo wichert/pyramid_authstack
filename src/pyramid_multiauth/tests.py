@@ -6,6 +6,12 @@ class MultiAuthenticationPolicyTests(unittest.TestCase):
         from . import MultiAuthenticationPolicy
         return MultiAuthenticationPolicy(*a, **kw)
 
+    def test_interface(self):
+        from zope.interface.verify import verifyObject
+        from pyramid.authentication import IAuthenticationPolicy
+        policy = self.MultiAuthenticationPolicy()
+        verifyObject(IAuthenticationPolicy, policy)
+
     def test_add_policy_new_policy(self):
         policy = self.MultiAuthenticationPolicy()
         policy.add_policy('foo', 'dummy')
