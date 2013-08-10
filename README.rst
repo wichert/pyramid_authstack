@@ -71,11 +71,11 @@ Mozilla has a similar project: `pyramid_multiauth
 <https://pypi.python.org/pypi/pyramid_multiauth>`_. There are a few difference
 between that package and this one:
 
-* pyramid_multiauth does not have a simple way to indicate which authentication
-  policy matched, which makes it unusable for my uses causes unless you always
-  use custom authentication sub-policies which add custom an extra principal.
-  This could be fixed, but it would require changing the API in a non-backward
-  compatible way.
+* pyramid_multiauth has no way to indicate which authentication policy matched,
+  which makes it unusable for my uses causes unless you always use custom
+  authentication sub-policies which add custom an extra principal.  This could
+  be fixed, but it would require changing the API in a non-backward compatible
+  way.
 * pyramid_multiauth duplicates some of the callback-handling code instead of
   reusing pyramid's CallbackAuthenticationPolicy.
 * pyramid_multiauth allows configuration via the PasteDeploy .ini file, which
