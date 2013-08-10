@@ -3,8 +3,19 @@ Pyramid multi-authentication
 
 The `pyramid_multiauth` package makes it possible to use multiple authentication
 policy in a `pyramid <http://www.pylonsproject.org>`_ project. This can be useful
-in environment where you may nee to be able to identify a user for a long period,
-while a recent login to access personal information.
+in several scenarios:
+
+- you need to be able to identify a user for a long period of time, while
+  requiting a recent login to access personal information. Amazon is an
+  example of a site doing this.
+
+- You want to send a newsletter to users and log the user in automatically when
+  they follow a link in the newsletter, but not give automatically give them
+  access to sensitive information.
+
+Confusing a multi-authentication policy is simple: create an instance
+of the `MultiAuthenticationPolicy` object, add the authentication policies
+you want to it and then tell Pyramid to use it.
 
 ::
 
