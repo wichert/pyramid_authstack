@@ -1,37 +1,37 @@
 import unittest
 
 
-class MultiAuthenticationPolicyTests(unittest.TestCase):
-    def MultiAuthenticationPolicy(self, *a, **kw):
-        from . import MultiAuthenticationPolicy
-        return MultiAuthenticationPolicy(*a, **kw)
+class AuthenticationStackPolicyTests(unittest.TestCase):
+    def AuthenticationStackPolicy(self, *a, **kw):
+        from . import AuthenticationStackPolicy
+        return AuthenticationStackPolicy(*a, **kw)
 
     def test_interface(self):
         from zope.interface.verify import verifyObject
         from pyramid.authentication import IAuthenticationPolicy
-        policy = self.MultiAuthenticationPolicy()
+        policy = self.AuthenticationStackPolicy()
         verifyObject(IAuthenticationPolicy, policy)
 
     def test_add_policy_new_policy(self):
-        policy = self.MultiAuthenticationPolicy()
+        policy = self.AuthenticationStackPolicy()
         policy.add_policy('foo', 'dummy')
         self.assertEqual(len(policy.policies), 1)
         self.assertTrue('foo' in policy.policies)
 
     def test_add_policy_replace_policy(self):
-        policy = self.MultiAuthenticationPolicy()
+        policy = self.AuthenticationStackPolicy()
         policy.add_policy('foo', 'dummy')
         policy.add_policy('foo', 'other')
         self.assertEqual(len(policy.policies), 1)
         self.assertEqual(policy.policies['foo'], 'other')
 
     def test_unauthenticated_userid_no_policies(self):
-        policy = self.MultiAuthenticationPolicy()
+        policy = self.AuthenticationStackPolicy()
         self.assertEqual(policy.unauthenticated_userid(None), None)
 
     def test_unauthenticated_userid_call_subpolicy(self):
         import mock
-        policy = self.MultiAuthenticationPolicy()
+        policy = self.AuthenticationStackPolicy()
         sub_policy = mock.Mock()
         sub_policy.unauthenticated_userid.return_value = 'userid'
         policy.add_policy('sub', sub_policy)
@@ -40,7 +40,7 @@ class MultiAuthenticationPolicyTests(unittest.TestCase):
 
     def test_unauthenticated_userid_prefer_first_policy(self):
         import mock
-        policy = self.MultiAuthenticationPolicy()
+        policy = self.AuthenticationStackPolicy()
         for i in [1, 2]:
             sub_policy = mock.Mock()
             sub_policy.unauthenticated_userid.return_value = i
@@ -49,13 +49,13 @@ class MultiAuthenticationPolicyTests(unittest.TestCase):
 
     def test_efffective_principals_no_policies(self):
         from pyramid.authentication import Everyone
-        policy = self.MultiAuthenticationPolicy()
+        policy = self.AuthenticationStackPolicy()
         self.assertEqual(policy.effective_principals(None), [Everyone])
 
     def test_efffective_principals_add_policy_delegate_to_subpolicy(self):
         from pyramid.authentication import Authenticated
         import mock
-        policy = self.MultiAuthenticationPolicy()
+        policy = self.AuthenticationStackPolicy()
         sub_policy = mock.Mock()
         sub_policy.effective_principals.return_value = ['principal']
         policy.add_policy('sub', sub_policy)
@@ -65,7 +65,7 @@ class MultiAuthenticationPolicyTests(unittest.TestCase):
     def test_efffective_principals_add_policy_name_as_principal_if_it_authenticates(self):
         from pyramid.authentication import Authenticated
         import mock
-        policy = self.MultiAuthenticationPolicy()
+        policy = self.AuthenticationStackPolicy()
         sub_policy = mock.Mock()
         sub_policy.effective_principals.return_value = []
         policy.add_policy('sub', sub_policy)
@@ -74,12 +74,12 @@ class MultiAuthenticationPolicyTests(unittest.TestCase):
         self.assertTrue('auth:sub' in policy.effective_principals(None))
 
     def test_remember_no_policies(self):
-        policy = self.MultiAuthenticationPolicy()
+        policy = self.AuthenticationStackPolicy()
         policy.remember('request', 'principal')
 
     def test_remember_delegate_to_subpolicy(self):
         import mock
-        policy = self.MultiAuthenticationPolicy()
+        policy = self.AuthenticationStackPolicy()
         sub_policy = mock.Mock()
         sub_policy.remember.return_value = ['headers']
         policy.add_policy('sub', sub_policy)
@@ -90,7 +90,7 @@ class MultiAuthenticationPolicyTests(unittest.TestCase):
 
     def test_remember_policy_filter(self):
         import mock
-        policy = self.MultiAuthenticationPolicy()
+        policy = self.AuthenticationStackPolicy()
         sub_policy = mock.Mock()
         sub_policy.remember.return_value = []
         policy.add_policy('sub', sub_policy)
@@ -100,12 +100,12 @@ class MultiAuthenticationPolicyTests(unittest.TestCase):
         sub_policy.remember.assert_called_once_with('request', 'principal')
 
     def test_forget_no_policies(self):
-        policy = self.MultiAuthenticationPolicy()
+        policy = self.AuthenticationStackPolicy()
         policy.forget('request')
 
     def test_forget_delegate_to_subpolicy(self):
         import mock
-        policy = self.MultiAuthenticationPolicy()
+        policy = self.AuthenticationStackPolicy()
         sub_policy = mock.Mock()
         sub_policy.forget.return_value = ['headers']
         policy.add_policy('sub', sub_policy)
@@ -114,7 +114,7 @@ class MultiAuthenticationPolicyTests(unittest.TestCase):
 
     def test_forget_policy_filter(self):
         import mock
-        policy = self.MultiAuthenticationPolicy()
+        policy = self.AuthenticationStackPolicy()
         sub_policy = mock.Mock()
         sub_policy.forget.return_value = []
         policy.add_policy('sub', sub_policy)

@@ -1,12 +1,12 @@
-Pyramid multi-authentication
+Pyramid authentication stack
 ============================
 
-.. image:: https://travis-ci.org/wichert/pyramid_multiauth.png?branch=master
-    :target: https://travis-ci.org/wichert/pyramid_multiauth
+.. image:: https://travis-ci.org/wichert/pyramid_authstack.png?branch=master
+    :target: https://travis-ci.org/wichert/pyramid_authstack
 
-The `pyramid_multiauth` package makes it possible to use multiple authentication
-policy in a `pyramid <http://www.pylonsproject.org>`_ project. This can be useful
-in several scenarios:
+The `pyramid_authstack` package makes it possible to stack multiple
+authentication policies in a `pyramid <http://www.pylonsproject.org>`_ project.
+This can be useful in several scenarios:
 
 - you need to be able to identify a user for a long period of time, while
   requiting a recent login to access personal information. Amazon is an
@@ -23,7 +23,7 @@ you want to it and then tell Pyramid to use it.
 ::
 
     from pyramid.authentication import AuthTktAuthenticationPolicy
-    from pyramid_multiauth import MultiAuthenticationPolicy
+    from pyramid_authstack import MultiAuthenticationPolicy
 
     auth_policy = MultiAuthenticationPolicy()
     # Add an authentication policy with a one-hour timeout to control
@@ -62,3 +62,22 @@ to sensitive information without asking for extra credentials.
 
    # Only set identity-authentication.
    headers = remember(request, 'chrism', policies=['identity'])
+
+
+Comparison to pyramid_multiauth
+-------------------------------
+
+Mozilla has a similar project: `pyramid_multiauth
+<https://pypi.python.org/pypi/pyramid_multiauth>`_. There are a few difference
+between that package and this one:
+
+* pyramid_multiauth does not have a simple way to indicate which authentication
+  policy matched, which makes it unusable for my uses causes unless you always
+  use custom authentication sub-policies which add custom an extra principal.
+  This could be fixed, but it would require changing the API in a non-backward
+  compatible way.
+* pyramid_multiauth duplicates some of the callback-handling code instead of
+  reusing pyramid's CallbackAuthenticationPolicy.
+* pyramid_multiauth allows configuration via the PasteDeploy .ini file, which
+  pyramid_authstack does not support.
+

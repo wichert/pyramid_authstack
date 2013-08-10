@@ -13,7 +13,7 @@ test_requires = [
         'mock',
     ]
 
-setup(name='pyramid_multiauth',
+setup(name='pyramid_authstack',
       version=version,
       description='Use multiple authentication policies with pyramid',
       long_description=open('README.rst').read(),
@@ -29,7 +29,7 @@ setup(name='pyramid_multiauth',
       ],
       author='Simplon B.V. - Wichert Akkerman',
       author_email='wichert@wiggy.net',
-      url='https://github.com/wichert/pyramid_multiauth',
+      url='https://github.com/wichert/pyramid_authstack',
       license='BSD',
       packages=find_packages('src'),
       package_dir={'': 'src'},

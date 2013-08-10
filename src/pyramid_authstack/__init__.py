@@ -7,7 +7,7 @@ from pyramid.authentication import CallbackAuthenticationPolicy
 
 
 @implementer(IAuthenticationPolicy)
-class MultiAuthenticationPolicy(CallbackAuthenticationPolicy):
+class AuthenticationStackPolicy(CallbackAuthenticationPolicy):
     def __init__(self):
         self.policies = collections.OrderedDict()
 
