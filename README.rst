@@ -90,6 +90,8 @@ Changelog
 
 - Fix use of obsolete naming in the README.
 
+- Add callback parameter to constructor.
+
 
 1.0.0 - August 10, 2013
 -----------------------

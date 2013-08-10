@@ -12,6 +12,10 @@ class AuthenticationStackPolicyTests(unittest.TestCase):
         policy = self.AuthenticationStackPolicy()
         verifyObject(IAuthenticationPolicy, policy)
 
+    def test_init_set_callback(self):
+        policy = self.AuthenticationStackPolicy('callback')
+        self.assertEqual(policy.callback, 'callback')
+
     def test_add_policy_new_policy(self):
         policy = self.AuthenticationStackPolicy()
         policy.add_policy('foo', 'dummy')
