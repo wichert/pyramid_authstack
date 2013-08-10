@@ -3,3 +3,4 @@
 *.swp
 /build
 /dist
+/src/pyramid_multiauth.egg-info
