@@ -17,15 +17,15 @@ This can be useful in several scenarios:
   access to sensitive information.
 
 Confusing a multi-authentication policy is simple: create an instance
-of the `MultiAuthenticationPolicy` object, add the authentication policies
+of the `AuthenticationStackPolicy` object, add the authentication policies
 you want to it and then tell Pyramid to use it.
 
 ::
 
     from pyramid.authentication import AuthTktAuthenticationPolicy
-    from pyramid_authstack import MultiAuthenticationPolicy
+    from pyramid_authstack import AuthenticationStackPolicy
 
-    auth_policy = MultiAuthenticationPolicy()
+    auth_policy = AuthenticationStackPolicy()
     # Add an authentication policy with a one-hour timeout to control
     # access to sensitive information.
     auth_policy.add_policy(
@@ -84,6 +84,12 @@ between that package and this one:
 
 Changelog
 =========
+
+1.0.1 - Unreleased
+-----------------------
+
+- Fix use of obsolete naming in the README.
+
 
 1.0.0 - August 10, 2013
 -----------------------
