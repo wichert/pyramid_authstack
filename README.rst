@@ -8,7 +8,7 @@ The `pyramid_authstack` package makes it possible to stack multiple
 authentication policies in a `pyramid <http://www.pylonsproject.org>`_ project.
 This can be useful in several scenarios:
 
-- you need to be able to identify a user for a long period of time, while
+- You need to be able to identify a user for a long period of time, while
   requiting a recent login to access personal information. Amazon is an
   example of a site doing this.
 
@@ -65,7 +65,7 @@ to sensitive information without asking for extra credentials.
 
 
 Comparison to pyramid_multiauth
--------------------------------
+===============================
 
 Mozilla has a similar project: `pyramid_multiauth
 <https://pypi.python.org/pypi/pyramid_multiauth>`_. There are a few difference
@@ -81,3 +81,11 @@ between that package and this one:
 * pyramid_multiauth allows configuration via the PasteDeploy .ini file, which
   pyramid_authstack does not support.
 
+
+Changelog
+=========
+
+1.0.0 - August 10, 2013
+-----------------------
+
+- First release.
